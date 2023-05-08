@@ -46,7 +46,7 @@ def filter_data(data, filters):
 
 # App-Layout
 def app():
-    st.title('Bibothek')
+    st.title('Bibothek 📚')
     st.sidebar.title('Filtern')
 
     # Daten importieren
@@ -79,7 +79,6 @@ def app():
 
 
     # Datenanalyse
-
     with col2:
         st.subheader('Statistische Auswertung')
 
@@ -89,7 +88,7 @@ def app():
         for column, value in filters.items():
             if value:
                 active_filter = column
-                st.write(f"Sortiert nach {active_filter}.")
+                st.write(f"Alle deine Bücher sortiert nach {active_filter}.")
                 # group data by active filter and count number of occurrences
                 #agg_data = data.groupby(active_filter).size().reset_index(name='Anzahl #')
                 agg_data = all_data.groupby(active_filter).size().reset_index(name='Anzahl #')
