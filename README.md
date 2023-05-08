@@ -5,13 +5,13 @@ This app allows users to upload an Excel file containing a list of books with th
 Installation
 
 To install the necessary dependencies, run the following command:
+
     pip install streamlit pandas sqlite3
 
 Usage
 
 To launch the app, run the following command:
+
     streamlit run bibothek.py
-
-
 
 This app was created using Streamlit, Pandas, and Plotly. Special thanks to the creators and contributors of these libraries for making this project possible.
