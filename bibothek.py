@@ -47,6 +47,25 @@ def filter_data(data, filters):
 # App-Layout
 def app():
     st.title('Bibothek 📚')
+    expander = st.expander("Was kann die App?", expanded=False)
+    with expander:
+        st.write("Bibothek ist eine Webanwendung, die es Nutzern ermöglicht, Buchdaten hochzuladen und in einer Datenbank zu speichern. Mit dieser Anwendung können Benutzer eine Excel-Datei mit einer Liste von Büchern mit ihren jeweiligen Merkmalen (Titel, Autor, Genre, Jahr, Altersgruppe, Sprache und aktueller Standort (eigenes Kinderzimmer, bei Freunden, bei Oma und Opa, usw.) hochladen, in einer Datenbank speichern und als Tabelle anzeigen lassen. Außerdem bietet es eine statistische Analyse der Daten in Form eines Diagramms.")
+        st.write("🚀TODO für die kommenden Updates:")
+        st.write("- Datenimport via Drag & Drop")
+        st.write("- Update & Delete via SQL")
+        st.write("- SQL-Kommandos direkt im Interface")
+        st.write("- mehrere Filter gleichzeitig")
+        st.write("- Bugfix: Jahr")
+        st.write("- Standort-Historie")
+        st.write("- mehr Charts")
+        hide = """
+        <style>
+        ul.streamlit-expander {
+            border: 0 !important;
+        </style>
+        """
+        st.markdown(hide, unsafe_allow_html=True)
+
     st.sidebar.title('Filtern')
 
     # Daten importieren
@@ -58,25 +77,19 @@ def app():
 
     # Filter
     filters = {
-        'Titel': st.sidebar.selectbox('Titel', [''] + list(get_data()['Titel'].unique())),
-        'Autor': st.sidebar.selectbox('Autor', [''] + list(get_data()['Autor'].unique())),
-        'Genre': st.sidebar.selectbox('Genre', [''] + list(get_data()['Genre'].unique())),
-        'Jahr': st.sidebar.selectbox('Jahr', [''] + list(get_data()['Jahr'].unique())),
-        'Altersgruppe': st.sidebar.selectbox('Altersgruppe', [''] + list(get_data()['Altersgruppe'].unique())),
-        'Sprache': st.sidebar.selectbox('Sprache', [''] + list(get_data()['Sprache'].unique())),
-        'Standort': st.sidebar.selectbox('Standort', [''] + list(get_data()['Standort'].unique()))
+        'Titel': st.sidebar.selectbox('Titel', [''] + list(get_data()['Titel'].unique()), key='selection'),
+        'Autor': st.sidebar.selectbox('Autor', [''] + list(get_data()['Autor'].unique()), key='selection_autor'),
+        'Genre': st.sidebar.selectbox('Genre', [''] + list(get_data()['Genre'].unique()), key='selection_genre'),
+        'Jahr': st.sidebar.selectbox('Jahr', [''] + list(get_data()['Jahr'].unique()), key='selection_jahr'),
+        'Altersgruppe': st.sidebar.selectbox('Altersgruppe', [''] + list(get_data()['Altersgruppe'].unique()), key='selection_altersgruppe'),
+        'Sprache': st.sidebar.selectbox('Sprache', [''] + list(get_data()['Sprache'].unique()), key='selection_sprache'),
+        'Standort': st.sidebar.selectbox('Standort', [''] + list(get_data()['Standort'].unique()), key='selection_standort')
     }
 
-    # Reset-Button
-    if st.sidebar.button('Filter zurücksetzen'):
-        filters = {key: '' for key in filters}
 
     # Daten filtern
     all_data = get_data()
     data = filter_data(all_data, filters)
-
-
-
 
     # Datenanalyse
     with col2:
@@ -110,6 +123,28 @@ def app():
                 st.write(f"Deine Bibliothek enthält {data.shape[0]} Buch/Bücher mit {active_filter} {value}.")
         st.table(data)
 
+
+    with st.sidebar:
+        # Reset-Button
+        def reset():
+            st.session_state.selection = ""
+            st.session_state.selection_autor = ""
+            st.session_state.selection_genre = ""
+            st.session_state.selection_jahr = ""
+            st.session_state.selection_altersgruppe = ""
+            st.session_state.selection_sprache = ""
+            st.session_state.selection_standort = ""
+
+        st.button('Filter zurücksetzen', on_click=reset) 
+
+        # About Me
+        if st.button("About"):
+            st.subheader("Bibothek Bücher-Tracking App")
+            st.text("Built with Streamlit & ❤")
+            '''
+            By Max [Twitter](https://www.twitter.com/kick_ban_ignore) // [GitHub](https://github.com/kick-ban-ignore)
+            '''
+      
 
 if __name__ == '__main__':
     app()
