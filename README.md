@@ -6,7 +6,7 @@ Installation
 
 To install the necessary dependencies, run the following command:
 
-    pip install streamlit pandas sqlite3
+    pip install streamlit pandas openpyxl
 
 Usage
 
