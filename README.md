@@ -10,8 +10,10 @@ To install the necessary dependencies, run the following command:
 
 Usage
 
-To launch the app, run the following command:
+To launch the app, clone the repo and run the following command:
 
     streamlit run bibothek.py
+
+Or try the online version on [Streamlit](https://bibothekbooktracker.streamlit.app/).
 
 This app was created using Streamlit, Pandas, and Plotly. Special thanks to the creators and contributors of these libraries for making this project possible.
